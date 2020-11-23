@@ -16,8 +16,9 @@ app = Flask(__name__)
 
 # Create a basic route in app.py by creating a function called jobs.
 def jobs():
+    jobs = execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name FROM job JOIN employer ON employer.id = job.employer_id')
     # In the body of the function return a call to the render_template() function, pass a parameter of 'index.html'.
-    return render_template('index.html')
+    return render_template('index.html', jobs=jobs)
 
 def open_connection():
     connection = getattr(g, '_connection', None)
